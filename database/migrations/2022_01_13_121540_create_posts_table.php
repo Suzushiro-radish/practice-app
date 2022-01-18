@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('instrument_id');
             $table->text('body');
             $table->foreignId('user_id');
-            $table->text('sources_url');
+            $table->text('sources_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

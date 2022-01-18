@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
+
 
 class PostController extends Controller
 {
@@ -24,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts/create');
     }
 
     /**
@@ -33,9 +36,18 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request, Post $post)
     {
-        //
+        $input = $request['post'];
+        $post = Post::create([
+            'title' => $input['title'],
+            'body' => $input['body'],
+            'instrument_id' => $input['instrument_id'],
+            'user_id' => Auth::id()
+        ]);
+        //$input = $input + [ "user_id" => Auth::id() ];
+	    //$post->fill($input)->save();
+	    return redirect('/posts');
     }
 
     /**
