@@ -33,12 +33,3 @@
     
     <a href='/posts' class='back'> back </a>
 </x-app-layout>
-
-
-    
-    <body>
-        <h1>Blog Title</h1>
-        
-
-
-    </body>

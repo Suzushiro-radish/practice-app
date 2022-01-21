@@ -40,6 +40,7 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
+                        @auth
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -49,6 +50,7 @@
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
+                        @endauth
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -93,6 +95,7 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
+            
         </div>
     </div>
 </nav>
