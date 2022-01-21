@@ -1,22 +1,30 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ $post -> title }}
+        </h2>
+    </x-slot>
 
-        <title>Blog</title>
-    </head>
+    <div class='post'>
+        <a href="">{{ $post->instrument->name }}</a>
+        <p class='body'> {{ $post -> body }} </p>
+        <a class='edit' href='{{ $post -> id }}/edit' style='display:inline' > edit </a>
+        {{--削除ボタン--}}
+        <form action="/posts/{{ $post->id }}" id="form_delete" method="post" style="display:inline">
+            @csrf
+            @method('DELETE')
+            <button type='submit' class='delete' style='display:inline' onclick='return deletePost(this)' > 削除 </button>
+        </form>
+    </div>
     
-    <body>
-        <h1>Blog Title</h1>
-        <div class='post'>
-            <h2>{{ $post -> title }}</h2>
-            <p class='body'>{{ $post -> body }}</p>
-        </div>
-        <a href='/' class='back'> back </a>
+    <a href='/posts' class='back'> back </a>
 
-    </body>
-</html>
-
+    <script>
+        function deletePost(e) {
+            'use strict';
+            if (confirm("削除すると復元できません。\n 本当に削除しますか？"))　{
+                document.getElementByClass ('form_delete').submit();
+            }
+        }
+    </script>
+</x-app-layout>
