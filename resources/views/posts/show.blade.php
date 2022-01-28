@@ -8,6 +8,13 @@
     <div class='post'>
         <a href="">{{ $post->instrument->name }}</a>
         <p class='body'> {{ $post -> body }} </p>
+        <div class='tags'>
+            @foreach ($tags as $tag)
+                <div class='tag'>
+                    {{ $tag->name }},
+                </div>
+            @endforeach
+        </div>
         <a class='edit' href='{{ $post -> id }}/edit' style='display:inline' > edit </a>
         {{--削除ボタン--}}
         <form action="/posts/{{ $post->id }}" id="form_delete" method="post" style="display:inline">

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Instrument;
-
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -26,9 +26,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Instrument $instrument)
     {
-        return view('posts/create');
+        return view('posts/create', [ 'instruments' => $instrument->all() ]);
     }
 
     /**
@@ -37,17 +37,27 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request, Post $post)
+    public function store(PostRequest $request, Post $post, Tag $tag)
     {
         $input = $request['post'];
+        
+        //タグがまだ存在していないとき
+        if ( $tag->where( 'name', $input['tags'])->doesntExist() ) {
+            //タグを新規登録
+            $tag = Tag::create([
+    	        'name' => $input['tags']
+            ]);
+	    };
+        //データを登録
         $post = Post::create([
             'title' => $input['title'],
             'body' => $input['body'],
             'instrument_id' => $input['instrument_id'],
             'user_id' => Auth::id()
         ]);
-        //$input = $input + [ "user_id" => Auth::id() ];
-	    //$post->fill($input)->save();
+        //タグとの中間テーブルに登録
+        $post->tags()->attach($tag->where('name', $input['tags'])->value('id'));
+        //投稿詳細画面へリダイレクト
 	    return redirect('/posts');
     }
 
@@ -59,7 +69,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts/show', ['post' => $post]);
+        $tags = Post::with('tags')->get();
+        return view('posts/show', ['post' => $post, 'tags' => $tags]);
     }
 
     /**
@@ -80,12 +91,18 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-	public function update(PostRequest $request, Post $post)
+	public function update(PostRequest $request, Post $post, Tag $tag)
 	{
 	    $input = $request['post'];
+	    if ( $tag->where( 'name', $input['tags'])->doesntExist() ) {
+	        $tag->name = $input['tags'];
+	        $tag->save();
+	    };
+	    
 		$post->title = $input['title'];
 		$post->body = $input['body'];
 		$post->instrument_id = $input['instrument_id'];
+		$post->tags = $input['tags'];
 		$post->save();
 		return redirect('/posts');
 	}
