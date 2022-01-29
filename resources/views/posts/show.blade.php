@@ -9,7 +9,7 @@
         <a href="">{{ $post->instrument->name }}</a>
         <p class='body'> {{ $post -> body }} </p>
         <div class='tags'>
-            @foreach ($tags as $tag)
+            @foreach ($post->tags as $tag)
                 <div class='tag'>
                     {{ $tag->name }},
                 </div>

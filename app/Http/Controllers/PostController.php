@@ -69,8 +69,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $tags = Post::with('tags')->get();
-        return view('posts/show', ['post' => $post, 'tags' => $tags]);
+        return view('posts/show', ['post' => $post]);
     }
 
     /**
