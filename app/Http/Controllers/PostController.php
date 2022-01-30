@@ -94,15 +94,18 @@ class PostController extends Controller
 	{
 	    $input = $request['post'];
 	    if ( $tag->where( 'name', $input['tags'])->doesntExist() ) {
-	        $tag->name = $input['tags'];
-	        $tag->save();
+            //タグを新規登録
+            $tag = Tag::create([
+    	        'name' => $input['tags']
+            ]);
 	    };
 	    
 		$post->title = $input['title'];
 		$post->body = $input['body'];
 		$post->instrument_id = $input['instrument_id'];
-		$post->tags = $input['tags'];
 		$post->save();
+		//タグとの中間テーブルに登録
+		$post->tags()->attach($tag->where('name', $input['tags'])->value('id'));
 		return redirect('/posts');
 	}
 
