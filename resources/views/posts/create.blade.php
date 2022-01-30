@@ -16,9 +16,9 @@
         <div class='instrument_form'>
             楽器選択 <br>
             <select name="post[instrument_id]">
-                <option value="1">ピアノ</option>
-                <option value="2">ギター</option>
-                <option value="3">バイオリン</option>
+                @foreach ($instruments as $instrument)
+                    <option value={{ $instrument -> id }}>{{ $instrument -> name }}</option>
+                @endforeach    
             </select>
             <div class='body_error' style='color:red'> {{ $errors -> first('post.instrument_id') }} </div>
         </div>
@@ -27,6 +27,13 @@
             Body <br>
             <textarea name='post[body]'> {{ old('post.body') }} </textarea>
             <div class='body_error' style='color:red'> {{ $errors -> first('post.body') }} </div>
+        </div>
+        <br>
+        <div class='tags_form'>
+            Tag <br>
+            <input type='text' name='post[tags][1]' placeholder='Tag1' value="{{ old('post.tags.1') }}" >
+            <input type='text' name='post[tags][2]' placeholder='Tag2' value="{{ old('post.tags.2') }}" >
+            <input type='text' name='post[tags][3]' placeholder='Tag3' value="{{ old('post.tags.3') }}" >
         </div>
         <input type='submit' value='submit' />
     </form>

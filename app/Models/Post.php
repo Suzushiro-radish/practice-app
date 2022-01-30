@@ -13,9 +13,19 @@ class Post extends Model
     
     protected $fillable = ['title', 'body', 'instrument_id', 'user_id'];
     
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
     public function instrument()
     {
         return $this->belongsTo(Instrument::class);
+    }
+    
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
     
     public function getPaginateByLimit(int $limit_count=5)
