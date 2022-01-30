@@ -27,7 +27,7 @@
                             <div>{{ Auth::user()->name }}</div>
                             @endauth
                             @guest
-                            <div>ログイン</div>
+                            <a href='/login'>ログイン</a>
                             @endguest
 
                             <div class="ml-1">
