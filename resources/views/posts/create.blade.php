@@ -31,7 +31,9 @@
         <br>
         <div class='tags_form'>
             Tag <br>
-            <input type='text' name='post[tags]' placeholder='Tags' value="{{ old('post.tags') }}" >
+            <input type='text' name='post[tags][1]' placeholder='Tag1' value="{{ old('post.tags.1') }}" >
+            <input type='text' name='post[tags][2]' placeholder='Tag2' value="{{ old('post.tags.2') }}" >
+            <input type='text' name='post[tags][3]' placeholder='Tag3' value="{{ old('post.tags.3') }}" >
         </div>
         <input type='submit' value='submit' />
     </form>

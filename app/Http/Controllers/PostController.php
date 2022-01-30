@@ -40,14 +40,6 @@ class PostController extends Controller
     public function store(PostRequest $request, Post $post, Tag $tag)
     {
         $input = $request['post'];
-        
-        //タグがまだ存在していないとき
-        if ( $tag->where( 'name', $input['tags'])->doesntExist() ) {
-            //タグを新規登録
-            $tag = Tag::create([
-    	        'name' => $input['tags']
-            ]);
-	    };
         //データを登録
         $post = Post::create([
             'title' => $input['title'],
@@ -55,8 +47,18 @@ class PostController extends Controller
             'instrument_id' => $input['instrument_id'],
             'user_id' => Auth::id()
         ]);
-        //タグとの中間テーブルに登録
-        $post->tags()->attach($tag->where('name', $input['tags'])->value('id'));
+        
+        //タグがまだ存在していないとき
+        foreach ($input['tags'] as $input_tag){
+            if ( $tag->where( 'name', $input_tag)->doesntExist() ) {
+                //タグを新規登録
+                $tag = Tag::create([
+        	        'name' => $input_tag
+                ]);
+    	    };
+            //タグとの中間テーブルに登録
+            $post->tags()->attach($tag->where('name', $input_tag)->value('id'));
+        }
         //投稿詳細画面へリダイレクト
 	    return redirect('/posts');
     }
