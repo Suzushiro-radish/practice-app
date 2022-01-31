@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\InstrumentController;
+use App\Http\Controllers\TagController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,5 +26,7 @@ Route::get('/dashboard', function () {
 Route::resource('posts', PostController::class);
 
 Route::get('posts/instrument/{instrument}', [InstrumentController::class, 'index']);
+
+Route::get('posts/tag/{tag}', [TagController::class, 'index']);
 
 require __DIR__.'/auth.php';
