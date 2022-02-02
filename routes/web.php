@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,5 +30,7 @@ Route::resource('posts', PostController::class);
 Route::get('posts/instrument/{instrument}', [InstrumentController::class, 'index']);
 
 Route::get('posts/tag/{tag}', [TagController::class, 'index']);
+
+Route::get('posts/search', SearchController::class)->middleware(['query']);
 
 require __DIR__.'/auth.php';

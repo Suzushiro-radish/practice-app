@@ -4,6 +4,10 @@
             投稿一覧
         </h2>
     </x-slot>
+    
+    <form action='/posts/search' method='GET'>
+        <input type='text' name='query' placeholder='Search'>
+    </form>
 
     <div class='posts'>
         <a class='create' href='/posts/create'>投稿</a>
@@ -23,4 +27,3 @@
     </div>
     
 </x-app-layout>
-
