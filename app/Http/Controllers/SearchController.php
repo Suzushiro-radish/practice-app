@@ -17,7 +17,25 @@ class SearchController extends Controller
     {
         $keywords = $request['query'];
         $query = Post::query();
-
+        
+        if ($request['tag_search'] === null) {
+            $searched = self::titleBodySearch($keywords, $query, $instrument);
+        }
+        
+        if ($request['tag_search'] !== null) {
+            $searched = self::tagSearch($keywords, $query, $instrument);
+        }
+        
+        return view('instruments.index', 
+            [
+                'posts' => $searched, 
+                'instrument'=>$instrument, 
+                'instrument_list' => Instrument::all(),
+            ]);
+    }
+    
+    private function titleBodySearch($keywords, $query, $instrument)
+    {
         if ($keywords !== null){
             //全角スペースを半角スペースに変換
             $keywords = mb_convert_kana($keywords, 's');
@@ -38,15 +56,9 @@ class SearchController extends Controller
             }
             
             $searched = $query->get();
-            dump($searched);
         }
         
-        return view('instruments.index', 
-            [
-                'posts' => $searched, 
-                'instrument'=>$instrument, 
-                'instrument_list' => Instrument::all(),
-            ]);
+        return $searched;
     }
     
 }
