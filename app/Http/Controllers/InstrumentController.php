@@ -15,7 +15,7 @@ class InstrumentController extends Controller
      */
     public function index(Instrument $instrument)
     {
-        return view('instruments.index', [ 'instrument' => $instrument,  'posts' => $instrument->getByInstrument()]);
+        return view('instruments.index', [ 'instrument' => $instrument, 'instrument_list' => Instrument::all(),  'posts' => $instrument->getByInstrument()]);
     }
 
     /**

@@ -27,10 +27,10 @@ Route::get('/dashboard', function () {
 
 Route::resource('posts', PostController::class);
 
-Route::get('posts/instrument/{instrument}', [InstrumentController::class, 'index']);
+Route::get('posts/instruments/{instrument}', [InstrumentController::class, 'index']);
 
-Route::get('posts/tag/{tag}', [TagController::class, 'index']);
+Route::get('posts/tags/{tag}', [TagController::class, 'index']);
 
-Route::get('posts/search', SearchController::class)->middleware(['query']);
+Route::get('posts/instruments/{instrument}/search', SearchController::class);
 
 require __DIR__.'/auth.php';

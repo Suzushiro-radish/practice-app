@@ -16,9 +16,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index(Post $post, Instrument $instrument)
     {
-        return view('posts/index')->with([ 'posts' => $post->getPaginateByLimit() ]) ;
+        return view('posts/index')->with([ 'posts' => $post->getPaginateByLimit() , 'instruments' => $instrument->get() ]); ;
     }
 
     /**
