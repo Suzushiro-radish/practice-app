@@ -1,15 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{$instrument->name}}
         </h2>
     </x-slot>
     
-    <form action='/posts/instruments/{{$instrument->id}}/search' method='GET'>
+    <form action='/posts/search' method='GET'>
         <select name='instrument'>
+            <option value='all'>すべての楽器</option>
             @foreach ($instrument_list as $instrument_select)
                 <option value={{ $instrument_select->id }}>{{ $instrument_select->name }}</option>
-            @endforeach    
+            @endforeach
         </select>
         <input type='text' name='query' placeholder='Search'>
     </form>

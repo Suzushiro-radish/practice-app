@@ -13,30 +13,34 @@ class SearchController extends Controller
      * タイトルと本文中を部分一致で検索
      * 
      */
-    public function __invoke(Request $request, Instrument $instrument)
+    public function __invoke(Request $request)
     {
         $keywords = $request['query'];
         $instrument_id = $request['instrument'];
         
+        if( is_numeric($instrument_id) ) {
+            $instrument_id = intval($instrument_id);
+        }
+        
         //検索する楽器名
-        if($instrument_id = 'all'){
+        if($instrument_id == 'all'){
             //instrumentがallなら、全ての楽器を代入
-            $instrument_name = '全ての楽器'
+            $instrument_name = '全ての楽器';
         } elseif (is_int($instrument_id)){
             //$instrument_idに対応するinstrument_nameを取得
             $instrument_name = Instrument::where('id', $instrument_id)->value('name');
         }
         
-        
+        //タグ検索とタイトル本文検索の分岐
         if ($request['tag_search'] === null) {
+            //タイトルと本文を検索
             $searched = self::titleBodySearch($keywords, $instrument_id);
-        }
-        
-        if ($request['tag_search'] !== null) {
+        } elseif ($request['tag_search'] !== null) {
+            //タグを検索
             $searched = self::tagSearch($keywords, $instrument_id);
         }
         
-        return view('instruments.index', 
+        return view('posts.index', 
             [
                 'posts' => $searched, 
                 'instrument_id' => $instrument_id,
@@ -59,18 +63,31 @@ class SearchController extends Controller
             //半角スペースで分割
             $keyword_array = array_unique(explode(' ', $keywords));
             
-            foreach ($keyword_array as $keyword){
-            //キーワード毎に、楽器内でタイトルと本文を検索
-                $query->orWhere('instrument_id', '=', $instrument_id)
-                    ->where(function ($query) use ($keyword){
-                        $query->where('title', 'like', "%$keyword%")
-                            ->orWhere('body', 'like', "%$keyword%");
-                    });
+            if($keyword_array !== null && is_int($instrument_id) ){
+            //$instrument_idに数字が入っていたら
+                //キーワード毎に、楽器内でタイトルと本文を検索
+                foreach ($keyword_array as $keyword){
+                    $query->orWhere('instrument_id', '=', $instrument_id)
+                        ->where(function ($query) use ($keyword){
+                            $query->where('title', 'like', "%$keyword%")
+                                ->orWhere('body', 'like', "%$keyword%");
+                        });
+                }
+                $searched = $query->paginate(3);
+                
+            } elseif ($keyword_array!==null && $instrument_id==='all') {
+            //instrument_idがallだったら
+                ////キーワード毎に、すべての楽器でタイトルと本文を検索
+                foreach ($keyword_array as $keyword){
+                    $query->where(function ($query) use ($keyword){
+                            $query->where('title', 'like', "%$keyword%")
+                                ->orWhere('body', 'like', "%$keyword%");
+                        });
+                }
+                $searched = $query->paginate(3);
             }
             
-            $searched = $query->paginate(3);
         }
-        
         return $searched;
     }
     
@@ -93,7 +110,7 @@ class SearchController extends Controller
                 $query->orWhere('instrument_id', '=', $instrument_id)
                     ->whereHas('tags', function($query) use ($keyword){
                         $query->where('name', $keyword);
-                    })
+                    });
             }
             
             $searched = $query->paginate(3);
