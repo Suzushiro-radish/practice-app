@@ -36,6 +36,8 @@ class SearchController extends Controller
     
     private function titleBodySearch($keywords, $query, $instrument)
     {
+        $query = Post::query();
+        
         if ($keywords !== null){
             //全角スペースを半角スペースに変換
             $keywords = mb_convert_kana($keywords, 's');
@@ -55,7 +57,7 @@ class SearchController extends Controller
                     });
             }
             
-            $searched = $query->get();
+            $searched = $query->paginate(1);
         }
         
         return $searched;

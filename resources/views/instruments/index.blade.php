@@ -30,5 +30,7 @@
         
     </div>
     
+    {{$posts->appends(request()->query())->links()}}
+
 </x-app-layout>
 
