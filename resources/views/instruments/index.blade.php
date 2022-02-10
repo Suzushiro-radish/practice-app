@@ -6,7 +6,7 @@
     </x-slot>
     
     <form action='/posts/instruments/{{$instrument->id}}/search' method='GET'>
-        <select name='instrument_id'>
+        <select name='instrument'>
             @foreach ($instrument_list as $instrument_select)
                 <option value={{ $instrument_select->id }}>{{ $instrument_select->name }}</option>
             @endforeach    
