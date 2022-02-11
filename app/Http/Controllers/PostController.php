@@ -18,7 +18,12 @@ class PostController extends Controller
      */
     public function index(Post $post, Instrument $instrument)
     {
-        return view('posts/index')->with([ 'posts' => $post->getPaginateByLimit() , 'instruments' => $instrument->get() ]); ;
+        return view('posts/index')
+            ->with([ 
+                'posts' => $post->getPaginateByLimit(), 
+                'instruments' => $instrument->get(),
+                'instrument_list' => Instrument::all(),
+                ]); ;
     }
 
     /**
