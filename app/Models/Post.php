@@ -28,6 +28,11 @@ class Post extends Model
         return $this->belongsToMany(Tag::class);
     }
     
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+    
     public function getPaginateByLimit(int $limit_count=5)
     {
         // updated_atで降順に並べたあと、limitで件数制限をかける
