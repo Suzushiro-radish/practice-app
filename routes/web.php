@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\InstrumentController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +25,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('posts/search', SearchController::class);
+
 Route::resource('posts', PostController::class);
+
+Route::get('posts/instruments/{instrument}', [InstrumentController::class, 'index']);
+
+Route::get('posts/tags/{tag}', [TagController::class, 'index']);
 
 
 require __DIR__.'/auth.php';
