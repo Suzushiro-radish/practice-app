@@ -36,5 +36,6 @@ Route::get('posts/tags/{tag}', [TagController::class, 'index']);
 
 Route::post('posts/{post}/bookmark/', [BookmarkController::class, 'store']);
 
+Route::post('posts/{post}/unbookmark/', [BookmarkController::class, 'destroy']);
 
 require __DIR__.'/auth.php';

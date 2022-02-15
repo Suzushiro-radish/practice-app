@@ -24,10 +24,10 @@
         </form>
         
         @if ($post->isBookmarked())
-            <form action='/posts/{{ $post->id }}/un-bookmark' id="bookmark-form" method="post" style="display:inline">
+            <form action='/posts/{{ $post->id }}/unbookmark' id="bookmark-form" method="post" style="display:inline">
                 @csrf
                 @method('POST')
-                <button type='submit' class='un-bookmark' style='display:inline'> unBM </button>
+                <button type='submit' class='unbookmark' style='display:inline'> unBM </button>
             </form>
         @else
             <form action='/posts/{{ $post->id }}/bookmark' id="bookmark-form" method="post" style="display:inline">

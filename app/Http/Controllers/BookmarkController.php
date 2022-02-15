@@ -31,9 +31,9 @@ class BookmarkController extends Controller
     /**
      * ブックマークを解除
      */
-    public function destroy(Request $request)
+    public function destroy(Post $post)
     {
-        $deleted = Bookmark::where('post_id', $request['post_id'])->delete();
+        $deleted = $post->bookmarks()->where('user_id', Auth::id())->delete();
         
         return back();
     }
