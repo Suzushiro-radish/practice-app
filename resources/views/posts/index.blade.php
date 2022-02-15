@@ -28,9 +28,24 @@
                 <a class='title' href='/posts/{{ $post->id }}'> <h2>{{ $post->title }}</h2> </a>
                 <a href='/posts/instruments/{{ $post->instrument->id }}'>{{ $post->instrument->name }}</a>
                 <p class='body'> {{ $post->body }} </p>
+                
                 @foreach ($post->tags as $post_tag)
                     <p class='tag'>{{$post_tag->name}}</p>
                 @endforeach
+                        
+                @if ($post->isBookmarked())
+                    <form action='/posts/{{ $post->id }}/un-bookmark' id="bookmark-form" method="post" style="display:inline">
+                        @csrf
+                        @method('POST')
+                        <button type='submit' class='un-bookmark' style='display:inline'> unBM </button>
+                    </form>
+                @else
+                    <form action='/posts/{{ $post->id }}/bookmark' id="bookmark-form" method="post" style="display:inline">
+                        @csrf
+                        @method('POST')
+                        <button type='submit' class='bookmark' style='display:inline'> BM </button>
+                    </form>
+                @endif
             </div>
             <br>
         @endforeach

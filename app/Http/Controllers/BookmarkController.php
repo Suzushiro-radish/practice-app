@@ -16,12 +16,12 @@ class BookmarkController extends Controller
      * ブックマークを登録
      * 
      */
-    public function store(Request $request)
+    public function store(Post $post)
     {
         //ブックマークを作成
         $bookmark = Bookmark::create([
-                'post_id' => $request['post_id'];
-                'user_id' => Auth::id();
+                'post_id' => $post->id,
+                'user_id' => Auth::id(),
             ]);
         
         //元のページへリダイレクト   
@@ -33,6 +33,8 @@ class BookmarkController extends Controller
      */
     public function destroy(Request $request)
     {
+        $deleted = Bookmark::where('post_id', $request['post_id'])->delete();
         
+        return back();
     }
 }

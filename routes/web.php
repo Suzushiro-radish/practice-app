@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\BookmarkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,8 @@ Route::resource('posts', PostController::class);
 Route::get('posts/instruments/{instrument}', [InstrumentController::class, 'index']);
 
 Route::get('posts/tags/{tag}', [TagController::class, 'index']);
+
+Route::post('posts/{post}/bookmark/', [BookmarkController::class, 'store']);
 
 
 require __DIR__.'/auth.php';

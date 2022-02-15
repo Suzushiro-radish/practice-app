@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,6 +32,17 @@ class Post extends Model
     public function bookmarks()
     {
         return $this->hasMany(Bookmark::class);
+    }
+    
+    public function isBookmarked()
+    {
+        $user_id = Auth::id();
+        
+        if ($this->bookmarks()->where('user_id', $user_id)->first() !== null){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     public function getPaginateByLimit(int $limit_count=5)

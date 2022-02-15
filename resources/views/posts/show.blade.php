@@ -22,6 +22,21 @@
             @method('DELETE')
             <button type='submit' class='delete' style='display:inline' onclick='return deletePost(this)' > 削除 </button>
         </form>
+        
+        @if ($post->isBookmarked())
+            <form action='/posts/{{ $post->id }}/un-bookmark' id="bookmark-form" method="post" style="display:inline">
+                @csrf
+                @method('POST')
+                <button type='submit' class='un-bookmark' style='display:inline'> unBM </button>
+            </form>
+        @else
+            <form action='/posts/{{ $post->id }}/bookmark' id="bookmark-form" method="post" style="display:inline">
+                @csrf
+                @method('POST')
+                <button type='submit' class='bookmark' style='display:inline'> BM </button>
+            </form>
+        @endif
+
     </div>
     
     <a href='/posts' class='back'> back </a>
