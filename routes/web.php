@@ -26,6 +26,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
 Route::get('posts/search', SearchController::class)->name('search');
 
 Route::resource('posts', PostController::class);
@@ -37,5 +38,7 @@ Route::get('posts/tags/{tag}', [TagController::class, 'index']);
 Route::post('posts/{post}/bookmark/', [BookmarkController::class, 'store']);
 
 Route::post('posts/{post}/unbookmark/', [BookmarkController::class, 'destroy']);
+
+Route::get('mypage/bookmark', [BookmarkController::class, 'index']);
 
 require __DIR__.'/auth.php';

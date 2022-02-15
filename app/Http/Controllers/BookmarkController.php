@@ -37,4 +37,18 @@ class BookmarkController extends Controller
         
         return back();
     }
+    
+    /**
+     * ブックマーク一覧
+     */
+    public function index()
+    {
+        $post = Post::whereHas('bookmarks', function($query){
+            $query->where('user_id', Auth::id());
+        })->paginate(3);
+        
+        return view('posts.bookmark', ['posts' => $post]);
+    }
+    
+    
 }
