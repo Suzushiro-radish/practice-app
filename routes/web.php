@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\BookmarkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('posts/search', SearchController::class);
+Route::middleware(['auth'])->group(function () {
+    
+    Route::post('posts/{post}/bookmark/', [BookmarkController::class, 'store']);
+    
+    Route::post('posts/{post}/unbookmark/', [BookmarkController::class, 'destroy']);
+    
+    Route::get('mypage/bookmark', [BookmarkController::class, 'index']);
+    
+});
+
+
+Route::get('posts/search', SearchController::class)->name('search');
 
 Route::resource('posts', PostController::class);
 
@@ -33,5 +45,6 @@ Route::get('posts/instruments/{instrument}', [InstrumentController::class, 'inde
 
 Route::get('posts/tags/{tag}', [TagController::class, 'index']);
 
+Route::get('instruments/{instrument}/tags/{tag}');
 
 require __DIR__.'/auth.php';

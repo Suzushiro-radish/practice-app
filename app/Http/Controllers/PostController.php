@@ -19,11 +19,12 @@ class PostController extends Controller
     public function index(Post $post, Instrument $instrument)
     {
         return view('posts/index')
-            ->with([ 
+            ->with([
+                'is_bookmarked' => $post->isBookmarked(),
                 'posts' => $post->getPaginateByLimit(), 
                 'instruments' => $instrument->get(),
                 'instrument_list' => Instrument::all(),
-                ]); ;
+                ]);
     }
 
     /**
@@ -50,7 +51,7 @@ class PostController extends Controller
             'title' => $input['title'],
             'body' => $input['body'],
             'instrument_id' => $input['instrument_id'],
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
         ]);
         
         //タグがまだ存在していないとき
@@ -76,7 +77,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts/show', ['post' => $post]);
+        return view('posts/show', 
+            [
+                'post' => $post, 
+            ]);
     }
 
     /**

@@ -1,25 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            @isset($instrument_name)
-                {{$instrument_name}}
-            @endisset
-            
-            @empty($instrument_name)
-                全ての楽器
-            @endempty
+        ブックマークした練習方法
         </h2>
     </x-slot>
-    
-    <form action='/posts/search' method='GET'>
-        <select name='instrument'>
-            <option value='all'>すべての楽器</option>
-            @foreach ($instrument_list as $instrument_select)
-                <option value={{ $instrument_select->id }}>{{ $instrument_select->name }}</option>
-            @endforeach
-        </select>
-        <input type='text' name='query' placeholder='Search'>
-    </form>
 
     <div class='posts'>
         <a class='create' href='/posts/create'>投稿</a>
