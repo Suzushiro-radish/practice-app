@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Instrument;
@@ -46,24 +47,34 @@ class PostController extends Controller
     public function store(PostRequest $request, Post $post, Tag $tag)
     {
         $input = $request['post'];
+        
+        $file = $request->file('file');
+        $path = Storage::disk('s3')->putFile('/', $file, 'public');
+        $file_path = Storage::disk('s3')->url($path);
+        
+        
         //データを登録
         $post = Post::create([
             'title' => $input['title'],
             'body' => $input['body'],
             'instrument_id' => $input['instrument_id'],
             'user_id' => Auth::id(),
+            'sources_url' => $file_path,
         ]);
         
         //タグがまだ存在していないとき
         foreach ($input['tags'] as $input_tag){
-            if ( $tag->where( 'name', $input_tag)->doesntExist() ) {
+            if ( $input_tag!==null && $tag->where( 'name', $input_tag)->doesntExist() ) {
                 //タグを新規登録
                 $tag = Tag::create([
-        	        'name' => $input_tag
+                    'name' => $input_tag
                 ]);
     	    };
-            //タグとの中間テーブルに登録
-            $post->tags()->attach($tag->where('name', $input_tag)->value('id'));
+    	    
+    	    if($input_tag !== null){
+                //タグとの中間テーブルに登録
+                $post->tags()->attach($tag->where('name', $input_tag)->value('id'));
+    	    }
         }
         //投稿詳細画面へリダイレクト
 	    return redirect('/posts');
