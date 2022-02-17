@@ -88,9 +88,12 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $image = Storage::disc('s3')->get($post->sources_url);
+        
         return view('posts/show', 
             [
-                'post' => $post, 
+                'post' => $post,
+                'image' => $image,
             ]);
     }
 
@@ -142,5 +145,6 @@ class PostController extends Controller
 		$post->delete();
     	return redirect('/posts');
     }
+    
     
 }

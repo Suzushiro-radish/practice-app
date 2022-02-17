@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            @isset($instrument_name)
-                {{$instrument_name}}
+            @isset($instrument)
+                {{$instrument->name}}
             @endisset
             
-            @empty($instrument_name)
+            @empty($instrument)
                 全ての楽器
             @endempty
         </h2>

@@ -23,26 +23,14 @@ class InstrumentController extends Controller
             ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function posts(Instrument $instrument)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return view('posts.index', 
+            [
+                'instrument' => $instrument, 
+                'instrument_list' => Instrument::all(),  
+                'posts' => $instrument->getByInstrument(),
+            ]);
     }
 
 }
