@@ -12,6 +12,7 @@
     </x-slot>
     
     <form action='/posts/search' method='GET'>
+        @csrf
         <select name='instrument'>
             <option value='all'>すべての楽器</option>
             @foreach ($instrument_list as $instrument_select)

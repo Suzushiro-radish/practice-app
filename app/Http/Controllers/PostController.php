@@ -48,9 +48,13 @@ class PostController extends Controller
     {
         $input = $request['post'];
         
-        $file = $request->file('file');
-        $path = Storage::disk('s3')->putFile('/', $file, 'public');
-        $file_path = Storage::disk('s3')->url($path);
+        try {
+            $file = $request->file('file');
+            $path = Storage::disk('s3')->putFile('/', $file, 'public');
+            $file_path = Storage::disk('s3')->url($path);
+        } catch(Exception $e){
+            return $e;
+        }
         
         
         //データを登録
@@ -88,7 +92,17 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $image = Storage::disc('s3')->get($post->sources_url);
+        
+        if ($post->sources_url){
+            try {
+                $image = Storage::disk('s3')->get($post->sources_url);
+            } catch (Exception $e) {
+                return $e;
+            }
+            
+        } else {
+            $image = null;
+        }
         
         return view('posts/show', 
             [

@@ -48,5 +48,3 @@ Route::get('instruments/{instrument}', [InstrumentController::class, 'posts']);
 Route::get('instruments/{instrument}/tags/{tag}', [SearchController::class, 'posts']);
 
 require __DIR__.'/auth.php';
-
-require __DIR__.'/auth.php';
