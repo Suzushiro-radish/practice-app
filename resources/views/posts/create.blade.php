@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <form action='/posts' method='POST' class='create_form'>
+    <form action='/posts' enctype="multipart/form-data" method='POST' class='create_form'>
         @csrf
         <div class='title_form'>
             Title <br>
@@ -35,6 +35,8 @@
             <input type='text' name='post[tags][2]' placeholder='Tag2' value="{{ old('post.tags.2') }}" >
             <input type='text' name='post[tags][3]' placeholder='Tag3' value="{{ old('post.tags.3') }}" >
         </div>
+        <input type="file" name="file" accept=".png, .jpg, .jpeg, .pdf" />  
+        <br>
         <input type='submit' value='submit' />
     </form>
     

@@ -8,6 +8,7 @@
     <div class='post'>
         <a href="">{{ $post->instrument->name }}</a>
         <p class='body'> {{ $post -> body }} </p>
+        <image class='image' src="{{$post->sources_url}}" title="画像" alt="画像">
         <div class='tags'>
             @foreach ($post->tags as $tag)
                 <div class='tag'>

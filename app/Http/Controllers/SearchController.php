@@ -25,10 +25,10 @@ class SearchController extends Controller
         //検索する楽器名
         if($instrument_id == 'all'){
             //instrumentがallなら、全ての楽器を代入
-            $instrument_name = '全ての楽器';
+            $instrument = null;
         } elseif (is_int($instrument_id)){
             //$instrument_idに対応するinstrument_nameを取得
-            $instrument_name = Instrument::where('id', $instrument_id)->value('name');
+            $instrument = Instrument::find($instrument_id);
         }
         
         //タグ検索とタイトル本文検索の分岐
@@ -43,8 +43,7 @@ class SearchController extends Controller
         return view('posts.index', 
             [
                 'posts' => $searched, 
-                'instrument_id' => $instrument_id,
-                'instrument_name' => $instrument_name, 
+                'instrument' => $instrument,
                 'instrument_list' => Instrument::all(),
             ]);
     }
