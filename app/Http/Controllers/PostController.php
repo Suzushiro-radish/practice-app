@@ -92,22 +92,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        
-        if ($post->sources_url){
-            try {
-                $image = Storage::disk('s3')->get($post->sources_url);
-            } catch (Exception $e) {
-                return $e;
-            }
-            
-        } else {
-            $image = null;
-        }
-        
         return view('posts/show', 
             [
                 'post' => $post,
-                'image' => $image,
             ]);
     }
 
