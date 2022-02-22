@@ -24,6 +24,9 @@ export default function Authenticated({ auth, header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                                <NavLink href={route('all.index')} active={route().current('all.index')}>
+                                    投稿一覧
+                                </NavLink>
                             </div>
                         </div>
 

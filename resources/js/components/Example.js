@@ -3,22 +3,43 @@ import ReactDOM from 'react-dom';
 
 function Example() {
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <div className="card-header">Example Component</div>
-
-                        <div className="card-body">I'm an example component!</div>
-                    </div>
+        <div class='posts'>
+            <a class='create' href='/posts/create'>投稿</a>
+            foreach $posts $post{
+                
+            }
+                <div class='post'>
+                    <a class='title' href='/posts/{{ $post->id }}'> <h2>{{ $post->title }}</h2> </a>
+                    <a href='/posts/instruments/{{ $post->instrument->id }}'>{{ $post->instrument->name }}</a>
+                    <p class='body'> {{ $post->body }} </p>
+                    
+                    {{ $post }}
+                        <p class='tag'>{{$post_tag->name}}</p>
+                    
+                            
+                    @if ($post->isBookmarked())
+                        <form action='/posts/{{ $post->id }}/unbookmark' id="bookmark-form" method="post" style="display:inline">
+                            @csrf
+                            @method('POST')
+                            <button type='submit' class='unbookmark' style='display:inline'> unBM </button>
+                        </form>
+                    @else
+                        <form action='/posts/{{ $post->id }}/bookmark' id="bookmark-form" method="post" style="display:inline">
+                            @csrf
+                            @method('POST')
+                            <button type='submit' class='bookmark' style='display:inline'> BM </button>
+                        </form>
+                    @endif
                 </div>
-            </div>
+                <br>
+            @endforeach
         </div>
+        
     );
 }
 
 export default Example;
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
+if (document.getElementById('app')) {
+    ReactDOM.render(<Example />, document.getElementById('app'));
 }

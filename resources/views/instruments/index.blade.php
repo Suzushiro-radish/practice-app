@@ -1,36 +1,33 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        </h2>
-    </x-slot>
-    
-    <form action='/posts/search' method='GET'>
-        <select name='instrument'>
-            <option value='all'>すべての楽器</option>
-            @foreach ($instrument_list as $instrument_select)
-                <option value={{ $instrument_select->id }}>{{ $instrument_select->name }}</option>
-            @endforeach
-        </select>
-        <input type='text' name='query' placeholder='Search'>
-    </form>
+<!doctype html>
 
-    <div class='posts'>
-        <a class='create' href='/posts/create'>投稿</a>
-        @foreach ($posts as $post)
-            <div class='post'>
-                <a class='title' href='/posts/{{ $post->id }}'> <h2>{{ $post->title }}</h2> </a>
-                <a href='/posts/instruments/{{ $post->instrument->id }}'>{{ $post->instrument->name }}</a>
-                <p class='body'> {{ $post->body }} </p>
-                @foreach ($post->tags as $post_tag)
-                    <p class='tag'>{{$post_tag->name}}</p>
-                @endforeach
-            </div>
-            <br>
-        @endforeach
-        
+
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
     </div>
-    
-    {{$posts->appends(request()->query())->links()}}
+</body>
 
-</x-app-layout>
+</html>
+
 
