@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -19,13 +20,18 @@ class PostController extends Controller
      */
     public function index(Post $post, Instrument $instrument)
     {
-        return view('posts/index')
-            ->with([
-                'is_bookmarked' => $post->isBookmarked(),
-                'posts' => $post->getPaginateByLimit(), 
-                'instruments' => $instrument->get(),
-                'instrument_list' => Instrument::all(),
-                ]);
+        // return view('posts/index')
+        //     ->with([
+        //         'is_bookmarked' => $post->isBookmarked(),
+        //         'posts' => $post->getPaginateByLimit(), 
+        //         'instruments' => $instrument->get(),
+        //         'instrument_list' => Instrument::all(),
+        //         ]);
+        
+        return Inertia::render('Posts/Index', [
+                'posts' => Post::all(), 
+            ]);
+        
     }
 
     /**
@@ -92,22 +98,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        
-        if ($post->sources_url){
-            try {
-                $image = Storage::disk('s3')->get($post->sources_url);
-            } catch (Exception $e) {
-                return $e;
-            }
-            
-        } else {
-            $image = null;
-        }
-        
         return view('posts/show', 
             [
                 'post' => $post,
-                'image' => $image,
             ]);
     }
 
