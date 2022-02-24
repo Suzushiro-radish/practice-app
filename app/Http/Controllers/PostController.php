@@ -27,7 +27,6 @@ class PostController extends Controller
         //         'instruments' => $instrument->get(),
         //         'instrument_list' => Instrument::all(),
         //         ]);
-        
         return Inertia::render('Posts/Index', [
                 'posts' => Post::all(), 
             ]);
@@ -98,7 +97,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts/show', 
+        return Inertia::render('Posts/Show', 
             [
                 'post' => $post,
             ]);
