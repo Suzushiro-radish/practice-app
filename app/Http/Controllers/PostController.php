@@ -38,9 +38,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Instrument $instrument)
+    public function create()
     {
-        return view('posts/create', [ 'instruments' => $instrument->all() ]);
+        return Inertia::render('Posts/Create', [ 'instruments' => Instrument::all() ]);
     }
 
     /**
@@ -49,44 +49,47 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request, Post $post, Tag $tag)
+    public function store(Request $request, Post $post, Tag $tag)
     {
-        $input = $request['post'];
-        
-        try {
-            $file = $request->file('file');
-            $path = Storage::disk('s3')->putFile('/', $file, 'public');
-            $file_path = Storage::disk('s3')->url($path);
-        } catch(Exception $e){
-            return $e;
+        if(isset($request['sources_url'])){
+            try {
+                $file = $request->file('file');
+                $path = Storage::disk('s3')->putFile('/', $file, 'public');
+                $file_path = Storage::disk('s3')->url($path);
+            } catch(Exception $e){
+                return $e;
+            }
+        } else {
+            $file_path = null;
         }
         
         
         //データを登録
         $post = Post::create([
-            'title' => $input['title'],
-            'body' => $input['body'],
-            'instrument_id' => $input['instrument_id'],
+            'title' => $request['title'],
+            'body' => $request['body'],
+            'instrument_id' => $request['instrument_id'],
             'user_id' => Auth::id(),
             'sources_url' => $file_path,
         ]);
         
-        //タグがまだ存在していないとき
-        foreach ($input['tags'] as $input_tag){
-            if ( $input_tag!==null && $tag->where( 'name', $input_tag)->doesntExist() ) {
-                //タグを新規登録
-                $tag = Tag::create([
-                    'name' => $input_tag
-                ]);
-    	    };
-    	    
-    	    if($input_tag !== null){
-                //タグとの中間テーブルに登録
-                $post->tags()->attach($tag->where('name', $input_tag)->value('id'));
-    	    }
+        if($request['tags']){
+            foreach ($request['tags'] as $input_tag){
+                //タグがまだ存在していないとき
+                if ( $input_tag!==null && $tag->where( 'name', $input_tag)->doesntExist() ) {
+                    //タグを新規登録
+                    $tag = Tag::create([
+                        'name' => $input_tag
+                    ]);
+        	    } else {
+        	    //タグが既に存在している時
+                    //タグとの中間テーブルに登録
+                    $post->tags()->attach($tag->where('name', $input_tag)->value('id'));
+        	    }
+            }
         }
         //投稿詳細画面へリダイレクト
-	    return redirect('/posts');
+	    return back();
     }
 
     /**
