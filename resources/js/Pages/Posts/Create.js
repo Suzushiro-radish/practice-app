@@ -10,17 +10,18 @@ const Create = (props) => {
     title: "",
     body: "",
     instrument_id: "",
+    file: "",
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    post(route('posts.store'), {forceFormData:true});
+    post(route('posts.store'));
   }
 
   return (
     <div>
       <div className="max-w-3xl overflow-hidden bg-white rounded shadow">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="flex flex-wrap p-8 -mb-8 -mr-6">
             <select 
               name="instrument_id"
@@ -50,6 +51,13 @@ const Create = (props) => {
               errors={errors.body}
               onChange={e => setData('body', e.target.value)}
             />
+            
+            <input 
+              type="file"
+              name="file"
+              onChange={e => setData('file', e.target.files[0])}
+            />
+            
             
           </div>
           <div className="flex items-center justify-end px-8 py-4 bg-gray-100 border-t border-gray-200">

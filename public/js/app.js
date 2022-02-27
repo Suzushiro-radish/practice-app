@@ -6165,7 +6165,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
       name: name,
       value: value
     }, props), {}, {
-      className: "form-input ".concat(errors.length ? 'error' : '')
+      className: "bg-gray-100 form-input ".concat(errors.length ? 'error' : '')
     })), errors && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
       className: "form-error",
       children: errors
@@ -6885,7 +6885,8 @@ var Create = function Create(props) {
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
     title: "",
     body: "",
-    instrument_id: ""
+    instrument_id: "",
+    file: ""
   }),
       data = _useForm.data,
       setData = _useForm.setData,
@@ -6895,9 +6896,7 @@ var Create = function Create(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    post(route('posts.store'), {
-      forceFormData: true
-    });
+    post(route('posts.store'));
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
@@ -6905,6 +6904,7 @@ var Create = function Create(props) {
       className: "max-w-3xl overflow-hidden bg-white rounded shadow",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
         onSubmit: handleSubmit,
+        encType: "multipart/form-data",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
           className: "flex flex-wrap p-8 -mb-8 -mr-6",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("select", {
@@ -6935,6 +6935,12 @@ var Create = function Create(props) {
             errors: errors.body,
             onChange: function onChange(e) {
               return setData('body', e.target.value);
+            }
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
+            type: "file",
+            name: "file",
+            onChange: function onChange(e) {
+              return setData('file', e.target.files[0]);
             }
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {

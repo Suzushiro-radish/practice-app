@@ -51,7 +51,7 @@ class PostController extends Controller
      */
     public function store(Request $request, Post $post, Tag $tag)
     {
-        if(isset($request['sources_url'])){
+        if(isset($request['file'])){
             try {
                 $file = $request->file('file');
                 $path = Storage::disk('s3')->putFile('/', $file, 'public');

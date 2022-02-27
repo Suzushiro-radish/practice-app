@@ -13,7 +13,7 @@ export default ({ label, name, value, className, errors = [], ...props }) => {
         name={name}
         value={value}
         {...props}
-        className={`form-input ${errors.length ? 'error' : ''}`}
+        className={`bg-gray-100 form-input ${errors.length ? 'error' : ''}`}
       />
       {errors && <div className="form-error">{errors}</div>}
     </div>
