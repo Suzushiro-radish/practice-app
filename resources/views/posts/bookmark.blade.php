@@ -17,7 +17,7 @@
                     <p class='tag'>{{$post_tag->name}}</p>
                 @endforeach
                         
-                @if ($post->isBookmarked())
+                @if ($post->isBookmarked)
                     <form action='/posts/{{ $post->id }}/unbookmark' id="bookmark-form" method="post" style="display:inline">
                         @csrf
                         @method('POST')

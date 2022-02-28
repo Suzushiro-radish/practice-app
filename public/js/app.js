@@ -5977,9 +5977,9 @@ function Layout(_ref) {
   var title = _ref.title,
       children = _ref.children;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    className: "bg-gray",
+    className: "bg-white",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Layouts_MainMenu__WEBPACK_IMPORTED_MODULE_1__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "w-full px-4 py-8 md:p-12",
+      className: "w-full",
       children: children
     })]
   });
@@ -6058,7 +6058,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    className: "flex-row",
+    className: "flex bg-gray-100",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Layouts_MainMenuItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
       text: "Dashboard",
       link: "dashboard"
@@ -6100,13 +6100,12 @@ __webpack_require__.r(__webpack_exports__);
   var isActive = route().current(link + '*');
   var textClasses = classnames__WEBPACK_IMPORTED_MODULE_2___default()({
     'text-black': isActive,
-    'text-indigo-200 text-black': !isActive
+    'text-indigo-200ｓ text-black': !isActive
   });
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    className: "mb-4",
+    className: "flex-initial w-48 bg-amber-400 hover:bg-amber-600 border-4 border-inherit text-center",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.InertiaLink, {
       href: route(link),
-      className: "items-center py-3",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: textClasses,
         children: text
@@ -6901,53 +6900,63 @@ var Create = function Create(props) {
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-      className: "max-w-3xl overflow-hidden bg-white rounded shadow",
+      className: "bg-white rounded shadow",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
         onSubmit: handleSubmit,
         encType: "multipart/form-data",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          className: "flex flex-wrap p-8 -mb-8 -mr-6",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("select", {
-            name: "instrument_id",
-            onChange: function onChange(e) {
-              return setData('instrument_id', e.target.value);
-            },
-            children: props.instruments.map(function (instrument) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("option", {
-                value: instrument.id,
-                children: instrument.name
-              }, instrument.id);
+          className: "flex",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("select", {
+              name: "instrument_id",
+              onChange: function onChange(e) {
+                return setData('instrument_id', e.target.value);
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("option", {
+                value: "",
+                children: "\u697D\u5668\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044"
+              }), props.instruments.map(function (instrument) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("option", {
+                  value: instrument.id,
+                  children: instrument.name
+                }, instrument.id);
+              })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Layouts_TextInput__WEBPACK_IMPORTED_MODULE_4__["default"], {
-            className: "w-full pb-8 pr-6 lg:w-1/2",
-            label: "\u30BF\u30A4\u30C8\u30EB",
-            name: "title",
-            value: data.title,
-            errors: errors.title,
-            onChange: function onChange(e) {
-              return setData('title', e.target.value);
-            }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Layouts_TextInput__WEBPACK_IMPORTED_MODULE_4__["default"], {
-            className: "w-full pb-8 pr-6 lg:w-1/2",
-            label: "\u672C\u6587",
-            name: "body",
-            value: data.body,
-            errors: errors.body,
-            onChange: function onChange(e) {
-              return setData('body', e.target.value);
-            }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-            type: "file",
-            name: "file",
-            onChange: function onChange(e) {
-              return setData('file', e.target.files[0]);
-            }
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Layouts_TextInput__WEBPACK_IMPORTED_MODULE_4__["default"], {
+              className: "w-full",
+              label: "\u30BF\u30A4\u30C8\u30EB",
+              name: "title",
+              value: data.title,
+              errors: errors.title,
+              onChange: function onChange(e) {
+                return setData('title', e.target.value);
+              }
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Layouts_TextInput__WEBPACK_IMPORTED_MODULE_4__["default"], {
+              className: "w-full",
+              label: "\u672C\u6587",
+              name: "body",
+              value: data.body,
+              errors: errors.body,
+              onChange: function onChange(e) {
+                return setData('body', e.target.value);
+              }
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
+              type: "file",
+              name: "file",
+              onChange: function onChange(e) {
+                return setData('file', e.target.files[0]);
+              }
+            })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "flex items-center justify-end px-8 py-4 bg-gray-100 border-t border-gray-200",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Layouts_LoadingButton__WEBPACK_IMPORTED_MODULE_5__["default"], {
             type: "submit",
-            className: "btn-indigo",
+            className: "btn",
             children: "Submit"
           })
         })]
@@ -7026,15 +7035,13 @@ var Index = function Index(props) {
       children: "Index"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "items-center justify-between mb-6",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.InertiaLink, {
-        className: "btn-indigo focus:outline-none",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.InertiaLink, {
+        className: "btn-indigo",
         href: route('posts.create'),
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-          children: "Create"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-          className: "hidden md:inline",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          className: "bg-black text-white",
           children: "\u6295\u7A3F"
-        })]
+        })
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "overflow-x-auto bg-white rounded shadow",
@@ -7075,7 +7082,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function Post(props) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-    className: "p-6 bg-white border-b border-gray-200",
+    className: "p-6 m-3 bg-white border rounded-md border-gray-200",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "post",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
@@ -7086,17 +7093,25 @@ function Post(props) {
         children: props.body
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         children: props.is_bookmarked ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+          preserveScroll: true,
           href: route('bookmark.destroy', props.id),
           method: "post",
           as: "button",
           type: "button",
-          children: "\u89E3\u9664"
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            src: "/img/unbookmarked.svg",
+            className: "w-10"
+          })
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+          preserveScroll: true,
           href: route('bookmark.store', props.id),
           method: "post",
           as: "button",
           type: "button",
-          children: "\u767B\u9332"
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            src: "/img/bookmarked.svg",
+            className: "w-10"
+          })
         })
       })]
     })

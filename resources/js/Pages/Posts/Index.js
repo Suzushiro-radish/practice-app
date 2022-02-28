@@ -42,11 +42,10 @@ const Index = (props) => {
       <h1 className="mb-8 text-3xl font-bold">Index</h1>
       <div className="items-center justify-between mb-6">
         <InertiaLink
-          className="btn-indigo focus:outline-none"
+          className="btn-indigo"
           href={route('posts.create')}
         >
-          <span>Create</span>
-          <span className="hidden md:inline">投稿</span>
+          <span className="bg-black text-white">投稿</span>
         </InertiaLink>
       </div>
       <div className="overflow-x-auto bg-white rounded shadow">

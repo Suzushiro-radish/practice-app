@@ -20,50 +20,58 @@ const Create = (props) => {
 
   return (
     <div>
-      <div className="max-w-3xl overflow-hidden bg-white rounded shadow">
+      <div className="bg-white rounded shadow">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="flex flex-wrap p-8 -mb-8 -mr-6">
-            <select 
-              name="instrument_id"
-              onChange={e => setData('instrument_id', e.target.value)}
-            >
-              { props.instruments.map( (instrument) => {
-                return(
-                  <option value={instrument.id} key={instrument.id}>{instrument.name}</option>
-                );
-              })}
-            </select>
+          <div className="flex">
+            <div>
+              <select 
+                name="instrument_id"
+                onChange={e => setData('instrument_id', e.target.value)}
+              >
+                <option value="">楽器を選択してください</option>
+                { props.instruments.map( (instrument) => {
+                  return(
+                    <option value={instrument.id} key={instrument.id}>{instrument.name}</option>
+                  );
+                })}
+              </select>
+            </div>
             
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="タイトル"
-              name="title"
-              value={data.title}
-              errors={errors.title}
-              onChange={e => setData('title', e.target.value)}
-            />
+            <div>
+              <TextInput
+                className="w-full"
+                label="タイトル"
+                name="title"
+                value={data.title}
+                errors={errors.title}
+                onChange={e => setData('title', e.target.value)}
+              />
+            </div>
             
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="本文"
-              name="body"
-              value={data.body}
-              errors={errors.body}
-              onChange={e => setData('body', e.target.value)}
-            />
+            <div>
+              <TextInput
+                className="w-full"
+                label="本文"
+                name="body"
+                value={data.body}
+                errors={errors.body}
+                onChange={e => setData('body', e.target.value)}
+              />
+            </div>
             
-            <input 
-              type="file"
-              name="file"
-              onChange={e => setData('file', e.target.files[0])}
-            />
-            
+            <div>
+              <input 
+                type="file"
+                name="file"
+                onChange={e => setData('file', e.target.files[0])}
+              />
+            </div>
             
           </div>
-          <div className="flex items-center justify-end px-8 py-4 bg-gray-100 border-t border-gray-200">
+          <div>
             <LoadingButton
               type="submit"
-              className="btn-indigo"
+              className="btn"
             >
               Submit
             </LoadingButton>

@@ -28,9 +28,8 @@ class PostController extends Controller
         //         'instrument_list' => Instrument::all(),
         //         ]);
         return Inertia::render('Posts/Index', [
-                'posts' => Post::all(), 
+                'posts' => Post::with(['instrument'])->get(), 
             ]);
-        
     }
 
     /**
@@ -51,7 +50,7 @@ class PostController extends Controller
      */
     public function store(Request $request, Post $post, Tag $tag)
     {
-        if(isset($request['file'])){
+        if( $request->file('file') ){
             try {
                 $file = $request->file('file');
                 $path = Storage::disk('s3')->putFile('/', $file, 'public');
@@ -89,7 +88,7 @@ class PostController extends Controller
             }
         }
         //投稿詳細画面へリダイレクト
-	    return back();
+	    return redirect('posts/'. $post->id );
     }
 
     /**
