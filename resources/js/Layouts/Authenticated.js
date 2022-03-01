@@ -27,6 +27,9 @@ export default function Authenticated({ auth, header, children }) {
                                 <NavLink href={route('all.index')} active={route().current('all.index')}>
                                     投稿一覧
                                 </NavLink>
+                                <NavLink href={route('instruments')} active={route().current('instruments.index')}>
+                                    楽器一覧
+                                </NavLink>
                             </div>
                         </div>
 
@@ -60,6 +63,9 @@ export default function Authenticated({ auth, header, children }) {
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
+                                        </Dropdown.Link>
+                                        <Dropdown.Link href={route('bookmarks')} method="get" as="button">
+                                            bookmark
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>

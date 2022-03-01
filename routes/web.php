@@ -8,6 +8,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\BookmarkController;
+
+use App\Models\Instrument;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('posts', PostController::class)->only([
         'create', 'store', 'update', 'edit', 'destroy', 
     ]);
-    Route::post('posts/{post}/bookmark/', [BookmarkController::class, 'store']);
-    Route::post('posts/{post}/unbookmark/', [BookmarkController::class, 'destroy']);
-    Route::get('mypage/bookmark', [BookmarkController::class, 'index']);
+    Route::post('posts/{post}/bookmark/', [BookmarkController::class, 'store'])->name('bookmark.store');
+    Route::post('posts/{post}/unbookmark/', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
+    Route::get('mypage/bookmark', [BookmarkController::class, 'index'])->name('bookmarks');
     
 });
 
@@ -49,10 +52,17 @@ Route::middleware(['auth'])->group(function () {
 Route::get('posts/search', SearchController::class)->name('search');
 
 //Posts
-Route::get('posts/{post}', [PostController::class, 'show']);
+Route::get('posts/{post}', [PostController::class, 'show'])->name('post.show');
 Route::get('instruments/all', [PostController::class, 'index'])->name('all.index');
 Route::get('instruments/all/tags/{tag}', [TagController::class, 'posts']);
 Route::get('instruments/{instrument}', [InstrumentController::class, 'posts']);
 Route::get('instruments/{instrument}/tags/{tag}', [SearchController::class, 'posts']);
+
+//楽器リスト
+Route::get('/instruments', function(){
+    return Inertia::render('Instruments/Instruments',[
+        'instruments' => Instrument::all(),
+        ]);
+})->name('instruments');
 
 require __DIR__.'/auth.php';

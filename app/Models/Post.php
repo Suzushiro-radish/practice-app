@@ -13,6 +13,7 @@ class Post extends Model
     use SoftDeletes;
     
     protected $fillable = ['title', 'body', 'instrument_id', 'user_id', 'sources_url'];
+    protected $appends = ['is_bookmarked'];
     
     public function user()
     {
@@ -34,7 +35,7 @@ class Post extends Model
         return $this->hasMany(Bookmark::class);
     }
     
-    public function isBookmarked()
+    public function getIsBookmarkedAttribute()
     {
         $user_id = Auth::id();
         
